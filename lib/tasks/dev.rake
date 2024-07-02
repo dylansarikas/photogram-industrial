@@ -11,7 +11,7 @@ task :sample_data => :environment do
     User.destroy_all
   end
 
-  12.times do
+  10.times do
     name =  Faker::Name.first_name
     user = User.create(
       username: name,
@@ -27,20 +27,20 @@ task :sample_data => :environment do
 
   users = User.all
 
-  users.each do |first_user|
-    users.each do |second_user|
-      next if first_user == second_user
-      if rand < 0.75
-        first_user.sent_follow_requests.create(
-          recipient: second_user,
-          status: FollowRequest.statuses.keys.sample
+  users.each do |first|
+    users.each do |second|
+      next if first == second
+      if rand < 0.667
+        first.sent_follow_requests.create(
+          recipient: second,
+          status: FollowRequest.statuses.values.sample
         )
       end
 
-      if rand < 0.75
-        first_user.sent_follow_requests.create(
-          recipient: second_user,
-          status: FollowRequest.statuses.keys.sample
+      if rand < 0.667
+        first.sent_follow_requests.create(
+          recipient: second,
+          status: FollowRequest.statuses.values.sample
         )
       end
     end
@@ -52,9 +52,24 @@ task :sample_data => :environment do
         image: "https://robohash.org/#{rand(9999)}",
         caption: Faker::Quote.famous_last_words
       )
+
+      user.followers.each do |follower|
+        if rand < 0.4 && !photo.fans.include?(follower)
+          photo.fans << follower
+        end
+
+        if rand < 0.2
+          photo.comments.create(
+            author: follower,
+            body: Faker::Quote.most_interesting_man_in_the_world
+          )
+        end
+      end
     end
   end
 
   p "There are now #{FollowRequest.count} follow requests"
   p "There are now #{Photo.count} photos"
+  p "There are now #{Comment.count} comments"
+  p "There are now #{Like.count} likes"
 end
