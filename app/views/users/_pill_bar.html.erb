@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col md-6">
+  <div class="col-md-6 offset-md-3">
     <h1>
       <%= @user.username %>
     </h1>
@@ -15,7 +15,7 @@
         <%= link_to "Feed", feed_path(@user.username), class: "nav-link" %>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Followers</a>
+        <%= link_to "Followers", followers_path(@user.username), class: "nav-link" %>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Following</a>
