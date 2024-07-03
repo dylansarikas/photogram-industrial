@@ -37,14 +37,14 @@ task :sample_data => :environment do
   users.each do |first|
     users.each do |second|
       next if first == second
-      if rand < 0.667
+      if rand < 0.7
         first.sent_follow_requests.create(
           recipient: second,
           status: FollowRequest.statuses.values.sample
         )
       end
 
-      if rand < 0.667
+      if rand < 0.7
         first.sent_follow_requests.create(
           recipient: second,
           status: FollowRequest.statuses.values.sample
@@ -65,7 +65,7 @@ task :sample_data => :environment do
           photo.fans << follower
         end
 
-        if rand < 0.2
+        if rand < 0.3
           photo.comments.create(
             author: follower,
             body: Faker::Quote.most_interesting_man_in_the_world
