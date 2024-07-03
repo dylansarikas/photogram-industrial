@@ -45,8 +45,8 @@ task :sample_data => :environment do
       end
 
       if rand < 0.7
-        first.sent_follow_requests.create(
-          recipient: second,
+        second.sent_follow_requests.create(
+          recipient: first,
           status: FollowRequest.statuses.values.sample
         )
       end
