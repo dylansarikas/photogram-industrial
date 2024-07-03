@@ -1,5 +1,5 @@
 <%= render "users/pill_bar" %>
 
-<% @user.liked_photos.each do |photo| %>
+<% @user.feed.each do |photo| %>
   <%= render "photos/photo", photo: photo %>
 <% end %>
